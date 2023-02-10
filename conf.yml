@@ -1,0 +1,26 @@
+tls:
+  certificates:  ## self-signed for example.com
+    - certFile: /certs/server/certificate.pem
+      keyFile: /certs/server/private.key
+http:
+  routers:
+    mitm:
+      entryPoints:
+        - websecure
+      rule: Host(`example.com`) ## && PathPrefix(`/api/v1/`)
+      service: mitm
+      priority: 100
+  services:
+    mitm:
+      loadBalancer:
+        passHostHeader: false ## don't enable
+        servers:
+          - url: https://example.com
+## use when the real example.com server validates mTLS client certificates
+#        serversTransport: mtls
+#  serversTransports:
+#    mtls:
+#      serverName: example.com  ## configure the server name that will be used for SNI.
+#      certificates:
+#        - certFile: /certs/client/certificate.pem
+#          keyFile: /certs/client/private.key
