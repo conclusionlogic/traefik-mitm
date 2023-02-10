@@ -24,7 +24,7 @@ Obtain them from the server that enforces client certificate validation by gener
 Update `conf.yml` according to the hostname/certifiate that needs testing and then run:
 
 ```
-docker compose up
+$ docker compose up
 ```
 
 Test scenario 1: (One-way TLS) The client app should not work with self-signed certificates.
